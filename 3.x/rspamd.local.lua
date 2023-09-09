@@ -1,19 +1,24 @@
 local lua_selectors = require "lua_selectors"
 local lua_util = require "lua_util"
+local rspamd_ip = require "rspamd_ip"
 local rspamd_regexp = require "rspamd_regexp"
 
-lua_selectors.register_extractor(rspamd_config, "numeric_urls", {
+lua_selectors.register_extractor(rspamd_config, "numeric_urls_reversed", {
   get_value = function(task, args)
-    local urls = task:get_urls()
-    if not urls then return end
-    local numeric_urls = {}
+    local urls = lua_util.extract_specific_urls({
+      flags_mode = 'explicit',
+      flags = {'numeric'},
+      task = task,
+    })
+    if not (urls and urls[1]) then return end
+    local reversed = {}
     for _, u in ipairs(urls) do
-      local flags = u:get_flags()
-      if flags.numeric then
-        table.insert(numeric_urls, u:get_host())
+      local addr = rspamd_ip.from_string(u:get_host())
+      if addr then
+        table.insert(reversed, table.concat(addr:inversed_str_octets(), "."))
       end
     end
-    if numeric_urls[1] then return numeric_urls, 'string' end
+    return reversed, 'string'
   end,
   description = 'Numeric URLs',
 })
