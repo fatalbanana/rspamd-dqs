@@ -25,7 +25,7 @@ lua_selectors.register_extractor(rspamd_config, "numeric_urls_reversed", {
 
 local reconf = config.regexp
 
-local eth_re = [[/^0x[a-fA-F0-9]{40}$/{raw_words}]]
+local eth_re = [[/^0x[a-fA-F0-9]{40}$/{raw_words}L]]
 reconf['ETH_ADDR'] = {
   re = eth_re,
   re_conditions = {
@@ -37,7 +37,7 @@ reconf['ETH_ADDR'] = {
   }
 }
 
-local ltc_re = [[/^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$/{raw_words}]]
+local ltc_re = [[/^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$/{raw_words}L]]
 reconf['LTC_ADDR'] = {
   re = ltc_re,
   re_conditions = {
@@ -50,7 +50,7 @@ reconf['LTC_ADDR'] = {
 }
 
 -- FIXME: likely wrong
-local xmr_re = [[/^4[0-9AB][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{93}$/{raw_words}]]
+local xmr_re = [[/^4[0-9AB][123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{93}$/{raw_words}L]]
 reconf['XMR_ADDR'] = {
   re = xmr_re,
   re_conditions = {
@@ -62,7 +62,7 @@ reconf['XMR_ADDR'] = {
   }
 }
 
-local xrp_re = [[/^r[rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz]{27,35}$/{raw_words}]]
+local xrp_re = [[/^r[rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz]{27,35}$/{raw_words}L]]
 reconf['XRP_ADDR'] = {
   re = xrp_re,
   re_conditions = {
