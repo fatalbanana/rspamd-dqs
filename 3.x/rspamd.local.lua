@@ -3,26 +3,6 @@ local lua_util = require "lua_util"
 local rspamd_ip = require "rspamd_ip"
 local rspamd_regexp = require "rspamd_regexp"
 
-lua_selectors.register_extractor(rspamd_config, "numeric_urls_reversed", {
-  get_value = function(task, args)
-    local urls = lua_util.extract_specific_urls({
-      flags_mode = 'explicit',
-      flags = {'numeric'},
-      task = task,
-    })
-    if not (urls and urls[1]) then return end
-    local reversed = {}
-    for _, u in ipairs(urls) do
-      local addr = rspamd_ip.from_string(u:get_host())
-      if addr then
-        table.insert(reversed, table.concat(addr:inversed_str_octets(), "."))
-      end
-    end
-    return reversed, 'string'
-  end,
-  description = 'Numeric URLs',
-})
-
 local reconf = config.regexp
 
 local eth_re = [[/^0x[a-fA-F0-9]{40}$/{raw_words}L]]
