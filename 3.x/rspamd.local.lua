@@ -1,7 +1,4 @@
-local lua_selectors = require "lua_selectors"
 local lua_util = require "lua_util"
-local rspamd_ip = require "rspamd_ip"
-local rspamd_regexp = require "rspamd_regexp"
 
 local reconf = config.regexp
 
